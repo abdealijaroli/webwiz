@@ -1,1 +1,1 @@
-# webwise
+# WebWiz - AI Web Designer
