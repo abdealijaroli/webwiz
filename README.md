@@ -1,1 +1,1 @@
-# WebWiz - AI Web Designer
+# WebWiz - AI powered Web Designer
