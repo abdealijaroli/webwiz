@@ -12,9 +12,7 @@ datasource db {
 
 model User {
     id        Int      @id @default(autoincrement())
+    username  String   @unique
+    openAiKey String   @unique
     createdAt DateTime @default(now())
-    email     String   @unique
-    name      String?
 }
-
-
