@@ -16,3 +16,4 @@ model User {
     openAiKey String   @unique
     createdAt DateTime @default(now())
 }
+ 

@@ -1,3 +1,19 @@
+"use client";
+
+async function getUsers() {
+    const res = await fetch("/api/");
+    
+    if(!res.ok) {
+        console.log("Error");
+    }
+    else {
+        const data = await res.json();
+        console.log(data);
+    }
+}
+
+
+
 export default function Home() {
     return (
         <main className="text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
@@ -15,12 +31,12 @@ export default function Home() {
                         type="text"
                         placeholder="Create a landing page for..."
                     />
-                    <button className="m-1.5 w-1/6 rounded-xl">
+                    <button className="m-1.5 w-1/6 rounded-xl" onClick={getUsers}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
-                            className="m-1 w-12 h-12"
+                            className="mr-4 w-12 h-12 hover:p-0.5"
                         >
                             <path
                                 fill-rule="evenodd"
