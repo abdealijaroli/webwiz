@@ -1,20 +1,29 @@
 "use client";
+import { useState } from "react";
 
 async function getUsers() {
     const res = await fetch("/api/");
-    
-    if(!res.ok) {
+
+    if (!res.ok) {
         console.log("Error");
-    }
-    else {
+    } else {
         const data = await res.json();
         console.log(data);
     }
 }
 
+async function sendGptReq() {
+    
+}
+
 
 
 export default function Home() {
+    const [text, setText] = useState("");
+
+
+
+
     return (
         <main className="text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
             <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black">
@@ -39,9 +48,9 @@ export default function Home() {
                             className="mr-4 w-12 h-12 hover:p-0.5"
                         >
                             <path
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                                 d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-                                clip-rule="evenodd"
+                                clipRule="evenodd"
                             />
                         </svg>
                     </button>
