@@ -17,16 +17,6 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ userDetails: user });
 }
 
-// export async function getGptRes(request: NextRequest) {
-//     const response = await openai.createChatCompletion({
-//         model: "gpt-3.5-turbo",
-        
-//     });
-//     return NextResponse.json(response);
-//}
-
-
-
 export async function sendGptReq(request: NextRequest) {
     const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -34,3 +24,11 @@ export async function sendGptReq(request: NextRequest) {
     });
     return NextResponse.json(response);
 }
+
+// export async function getGptRes(request: NextRequest) {
+//     const response = await openai.createChatCompletion({
+//         model: "gpt-3.5-turbo",
+        
+//     });
+//     return NextResponse.json(response);
+//}

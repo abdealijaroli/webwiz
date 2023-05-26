@@ -1,51 +1,50 @@
-"use client";
+'use client';
 import { useState } from "react";
-
-async function getUsers() {
-    const res = await fetch("/api/");
-
-    if (!res.ok) {
-        console.log("Error");
-    } else {
-        const data = await res.json();
-        console.log(data);
-    }
-}
-
-async function sendGptReq() {
-    
-}
-
-
 
 export default function Home() {
     const [text, setText] = useState("");
+    const [userPrompts, setUserPrompts] = useState<any>([]);
 
-
-
+    const sendGptReq = async (text: string) => {
+        setUserPrompts([...userPrompts, text]);
+        
+    };
 
     return (
         <main className="text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
-            <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black">
-                <h1 className="m-2">Canvas</h1>
-            </div>
+            <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black"></div>
 
             <div className="flex flex-col items-start justify-start border-2 border-secondary w-1/4 m-2 rounded-xl">
-                <h1 className="m-2 float-left">Chat</h1>
+                <h1 className="m-2 float-left">Send Instructions</h1>
 
-
-                <div className="m-2 flex flex-row items-end w-full h-full"> 
-                    <input
+                {userPrompts.map((prompt: string) => (
+                    <div className="text-lg font-thin my-3 p-2 flex w-full h-fit bg-gray-500 rounded-xl text-white">
+                        <p>{prompt}</p>
+                    </div>
+                ))
+                }
+                
+                <div className=" m-2 flex flex-row items-end w-full h-full">
+                    <input   
                         className="m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
                         type="text"
                         placeholder="Create a landing page for..."
+                        id="promptBox"
+                        onChange={(e) => setText(e.target.value)}
                     />
-                    <button className="m-1.5 w-1/6 rounded-xl" onClick={getUsers}>
+                    <button
+                        className="m-1.5 w-1/6 rounded-xl" 
+                        onClick={() => {
+                            text.length > 0 && sendGptReq(text);
+                            const inputBox = document.getElementById("promptBox") as HTMLInputElement;
+                            inputBox.value = "";
+                        }}
+                    >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
                             fill="currentColor"
-                            className="mr-4 w-12 h-12 hover:p-0.5"
+                            className="mr-4 w-12 h-14 transition hover:scale-110 hover:text-secondary"
                         >
                             <path
                                 fillRule="evenodd"
