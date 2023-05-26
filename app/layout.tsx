@@ -1,19 +1,18 @@
-import './globals.css'
+import "./globals.css";
 
 export const metadata = {
-  title: "WebWiz - AI powered Web Designer",
-  description: "Your AI powered Web Designer.",
+    title: "WebWiz - AI powered Web Designer",
+    description: "Your AI powered Web Designer.",
 };
 
 export default function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode
+    children: React.ReactNode;
 }) {
-  return (
-    <html lang="en">
-      <body className=" bg-primary text-secondary h-screen">{children}</body>
-    </html> 
-
-  )
+    return (
+        <>
+            {children}
+        </>
+    );
 }

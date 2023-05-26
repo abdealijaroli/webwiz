@@ -1,4 +1,5 @@
 'use client';
+
 import { useState } from "react";
 
 export default function Home() {
@@ -7,11 +8,11 @@ export default function Home() {
 
     const sendGptReq = async (text: string) => {
         setUserPrompts([...userPrompts, text]);
-        
+        setText('');        
     };
 
     return (
-        <main className="text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
+        <main className="bg-primary text-center text-xl m-6 font-medium flex flex-row h-[90vh] ">
             <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black"></div>
 
             <div className="flex flex-col items-start justify-start border-2 border-secondary w-1/4 m-2 rounded-xl">
@@ -21,11 +22,10 @@ export default function Home() {
                     <div className="text-lg font-thin my-3 p-2 flex w-full h-fit bg-gray-500 rounded-xl text-white">
                         <p>{prompt}</p>
                     </div>
-                ))
-                }
-                
+                ))}
+
                 <div className=" m-2 flex flex-row items-end w-full h-full">
-                    <input   
+                    <input
                         className="m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
                         type="text"
                         placeholder="Create a landing page for..."
@@ -33,10 +33,12 @@ export default function Home() {
                         onChange={(e) => setText(e.target.value)}
                     />
                     <button
-                        className="m-1.5 w-1/6 rounded-xl" 
+                        className="m-1.5 w-1/6 rounded-xl"
                         onClick={() => {
                             text.length > 0 && sendGptReq(text);
-                            const inputBox = document.getElementById("promptBox") as HTMLInputElement;
+                            const inputBox = document.getElementById(
+                                "promptBox"
+                            ) as HTMLInputElement;
                             inputBox.value = "";
                         }}
                     >
