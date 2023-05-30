@@ -1,31 +1,42 @@
 "use client";
+// todo: 
+// - remove use client from here, distinguish b/w client and server comps and make separate comps for interactive elems such as btns etc and make em "use client". finally import em here and display
+// - remove model/ai.ts, unless it's needed. check if the ai logic can be handled in this file itself
+// - make navbar. user avatar. sign in and sign out
+// - implement next-auth. user email and pass plus openai api key needed
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AiOutlineSend } from "react-icons/ai";
 
 export default function Home() {
-    const [text, setText] = useState("");
+    const [text, setText] = useState<any>("");
     const [userPrompts, setUserPrompts] = useState<any>([]);
+    const [html, setHtml] = useState<any>("");
+    const [css, setCss] = useState<any>("");
+    const [js, setJs] = useState<any>("");
 
     const router = useRouter();
 
-    const sendGptReq = (text: string) => {
-        setUserPrompts([...userPrompts, text]);
-        setText("");
-    };
-
     const onClear = () => {
         setUserPrompts([]);
-        router.refresh();
     };
 
-    const handleInput = (e: any) => {
+    const onInput = (e: any) => {
         setText(e.target.value);
     };
 
+    const sendAiRequest = (text: string) => {
+        if (text.length > 0) {
+            setUserPrompts([...userPrompts, text]);
+            setText("");
+        }
+    };
+
+
     return (
         <main className="bg-primary p-4 rounded-md text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
-            <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-white"></div>
+            <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black"></div>
 
             <div className="flex flex-col items-start justify-start border-2 border-secondary w-1/4 m-2 rounded-xl text-white">
                 <div className="flex flex-row justify-between w-full">
@@ -52,38 +63,23 @@ export default function Home() {
                             type="text"
                             placeholder="Create a submit button with rounded borders..."
                             id="promptBox"
-                            onChange={handleInput}
+                            value={text}
+                            onChange={onInput}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                    text.length > 0 && sendGptReq(text);
-                                    // clear the input box
-                                    
+                                    sendAiRequest(text);
+                                    setText("");
                                 }
                             }}
                         />
                         <button
                             className="w-1/6 rounded-xl"
                             onClick={() => {
-                                text.length > 0 && sendGptReq(text);
-                                // look for best practices to clear the prompt box 
-                                const pBox = document.getElementById(
-                                    "promptBox"
-                                ) as HTMLInputElement;
-                                pBox.value = "";
+                                sendAiRequest(text);
+                                setText("");
                             }}
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                fill="#FDE3C8"
-                                className="w-11 h-14 transition hover:scale-105"
-                            >
-                                <path
-                                    fillRule="evenodd"
-                                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-                                    clipRule="evenodd"
-                                />
-                            </svg>
+                            <AiOutlineSend className="text-3xl text-secondary transition hover:scale-110" />
                         </button>
                     </div>
                 </div>
