@@ -33,7 +33,6 @@ export default function Home() {
         }
     };
 
-
     return (
         <main className="bg-primary p-4 rounded-md text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
             <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black"></div>
