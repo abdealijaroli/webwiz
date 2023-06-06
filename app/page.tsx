@@ -1,13 +1,21 @@
-"use client";
-// todo: 
+// todo:
 // - remove use client from here, distinguish b/w client and server comps and make separate comps for interactive elems such as btns etc and make em "use client". finally import em here and display
-// - remove model/ai.ts, unless it's needed. check if the ai logic can be handled in this file itself
+// done - remove model/ai.ts, unless it's needed. check if the ai logic can be handled in this file itself
 // - make navbar. user avatar. sign in and sign out
 // - implement next-auth. user email and pass plus openai api key needed
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineSend } from "react-icons/ai";
+
+const Props = {
+    text: String,
+    userPrompts: Array,
+    html: String,
+    css: String,
+    js: String,
+};
 
 export default function Home() {
     const [text, setText] = useState<any>("");
@@ -24,13 +32,6 @@ export default function Home() {
 
     const onInput = (e: any) => {
         setText(e.target.value);
-    };
-
-    const sendAiRequest = (text: string) => {
-        if (text.length > 0) {
-            setUserPrompts([...userPrompts, text]);
-            setText("");
-        }
     };
 
     return (
@@ -60,13 +61,12 @@ export default function Home() {
                         <input
                             className="text-sm m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
                             type="text"
-                            placeholder="Create a submit button with rounded borders..."
+                            placeholder='Create a title named as "Hello World!"...'
                             id="promptBox"
                             value={text}
                             onChange={onInput}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
-                                    sendAiRequest(text);
                                     setText("");
                                 }
                             }}
@@ -74,7 +74,6 @@ export default function Home() {
                         <button
                             className="w-1/6 rounded-xl"
                             onClick={() => {
-                                sendAiRequest(text);
                                 setText("");
                             }}
                         >
