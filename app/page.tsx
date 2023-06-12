@@ -8,6 +8,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AiOutlineSend } from "react-icons/ai";
+import { sendAiReq } from "./api/ai/route";
 
 const Props = {
     text: String,
@@ -17,7 +18,7 @@ const Props = {
     js: String,
 };
 
-export default function Home() {
+export default function Home() {    
     const [text, setText] = useState<any>("");
     const [userPrompts, setUserPrompts] = useState<any>([]);
     const [html, setHtml] = useState<any>("");
