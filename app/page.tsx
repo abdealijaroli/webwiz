@@ -1,6 +1,5 @@
 // todo:
 // - remove use client from here, distinguish b/w client and server comps and make separate comps for interactive elems such as btns etc and make em "use client". finally import em here and display
-// done - remove model/ai.ts, unless it's needed. check if the ai logic can be handled in this file itself
 // - make navbar. user avatar. sign in and sign out
 // - implement next-auth. user email and pass plus openai api key needed
 "use client";
