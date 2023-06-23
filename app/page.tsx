@@ -1,37 +1,16 @@
-// todo:
-// - remove use client from here, distinguish b/w client and server comps and make separate comps for interactive elems such as btns etc and make em "use client". finally import em here and display
-// - make navbar. user avatar. sign in and sign out
-// - implement next-auth. user email and pass plus openai api key needed
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { AiOutlineSend } from "react-icons/ai";
-import { sendAiReq } from "./api/ai/route";
+import { useChat } from "ai/react";
 
-const Props = {
-    text: String,
-    userPrompts: Array,
-    html: String,
-    css: String,
-    js: String,
-};
+export default function Home() {
+    const { messages, input, handleInputChange, handleSubmit } = useChat();
 
-export default function Home() {    
-    const [text, setText] = useState<any>("");
-    const [userPrompts, setUserPrompts] = useState<any>([]);
-    const [html, setHtml] = useState<any>("");
-    const [css, setCss] = useState<any>("");
-    const [js, setJs] = useState<any>("");
-
-    const router = useRouter();
+    const [localMessages, setLocalMessages] = useState<any>([]);
 
     const onClear = () => {
-        setUserPrompts([]);
-    };
-
-    const onInput = (e: any) => {
-        setText(e.target.value);
+        setLocalMessages([]);
     };
 
     return (
@@ -49,37 +28,34 @@ export default function Home() {
                     </button>
                 </div>
                 <div className="flex flex-col justify-start w-full h-screen overflow-auto">
-                    {userPrompts.map((prompt: string) => (
-                        <div className="text-sm my-3 mx-3 p-2 flex w-[90%] h-fit bg-secondary rounded-xl text-black">
-                            <p>{prompt}</p>
+                    {messages.map((m) => (
+                        <div
+                            key={m.id}
+                            className="text-sm my-3 mx-3 p-2 flex w-[90%] h-fit bg-secondary rounded-xl text-black"
+                        >
+                            <p>
+                                {m.role}: {m.content}
+                            </p>
                         </div>
                     ))}
                 </div>
 
                 <div className="m-2 flex flex-col w-full justify-end">
-                    <div className="flex">
-                        <input
-                            className="text-sm m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
-                            type="text"
-                            placeholder='Create a title named as "Hello World!"...'
-                            id="promptBox"
-                            value={text}
-                            onChange={onInput}
-                            onKeyDown={(e) => {
-                                if (e.key === "Enter") {
-                                    setText("");
-                                }
-                            }}
-                        />
-                        <button
-                            className="w-1/6 rounded-xl"
-                            onClick={() => {
-                                setText("");
-                            }}
-                        >
-                            <AiOutlineSend className="text-3xl text-secondary transition hover:scale-110" />
-                        </button>
-                    </div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="flex">
+                            <input
+                                className="text-sm m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
+                                type="text"
+                                placeholder='Create a title named as "Hello World!"...'
+                                id="promptBox"
+                                value={input}
+                                onChange={handleInputChange}
+                            />
+                            <button className="w-1/6 rounded-xl" type="submit">
+                                <AiOutlineSend className="text-3xl text-secondary transition hover:scale-110" />
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </main>
