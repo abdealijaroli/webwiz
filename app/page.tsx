@@ -1,31 +1,20 @@
 "use client";
 
-import { useState } from "react";
 import { AiOutlineSend } from "react-icons/ai";
 import { useChat } from "ai/react";
+import Canvas from "./Canvas";
 
 export default function Home() {
-    const { messages, input, handleInputChange, handleSubmit } = useChat();
 
-    const [localMessages, setLocalMessages] = useState<any>([]);
-
-    const onClear = () => {
-        setLocalMessages([]);
-    };
+    const { messages, input, handleInputChange, handleSubmit } = useChat({});
 
     return (
         <main className="bg-primary p-4 rounded-md text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
-            <div className="flex flex-col items-start justify-start w-3/4 m-2 rounded-xl bg-black"></div>
+            <Canvas />
 
             <div className="flex flex-col items-start justify-start border-2 border-secondary w-1/4 m-2 rounded-xl text-white">
                 <div className="flex flex-row justify-between w-full">
-                    <h1 className="m-3">Send Instructions</h1>
-                    <button
-                        className="m-2 px-2 py-1 transition shadow-xl rounded-xl border-[2px] bg-secondary hover:bg-primary border-secondary hover:text-white text-primary text-lg font-semibold"
-                        onClick={onClear}
-                    >
-                        Clear All
-                    </button>
+                    <h1 className="m-3">Chat</h1>
                 </div>
                 <div className="flex flex-col justify-start w-full h-screen overflow-auto">
                     {messages.map((m) => (
@@ -34,7 +23,7 @@ export default function Home() {
                             className="text-sm my-3 mx-3 p-2 flex w-[90%] h-fit bg-secondary rounded-xl text-black"
                         >
                             <p>
-                                {m.role}: {m.content}
+                                {m.role === "user" ? "User" : "AI"}: {m.content}
                             </p>
                         </div>
                     ))}
@@ -46,7 +35,7 @@ export default function Home() {
                             <input
                                 className="text-sm m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
                                 type="text"
-                                placeholder='Create a title named as "Hello World!"...'
+                                placeholder='Create a heading as "Hello World!"...'
                                 id="promptBox"
                                 value={input}
                                 onChange={handleInputChange}
