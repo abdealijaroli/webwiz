@@ -4,7 +4,7 @@ interface CanvasProps {
     html?: string;
     css?: string;
     js?: string;
-}
+} 
 
 const Canvas = ({ html, css, js }: CanvasProps) => {
     return (
