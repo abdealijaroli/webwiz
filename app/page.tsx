@@ -1,51 +1,61 @@
 "use client";
 
-import { AiOutlineSend } from "react-icons/ai";
+import { useState } from "react";
 import { useChat } from "ai/react";
 import Canvas from "./Canvas";
+import ChatInterface from "./ChatInterface";
+
+interface responseInterface {
+    text: string;
+    html?: string;
+    css?: string;
+    js?: string;
+}
 
 export default function Home() {
+    const [html, setHtml] = useState("");
+    const [css, setCss] = useState("");
+    const [js, setJs] = useState("");
 
     const { messages, input, handleInputChange, handleSubmit } = useChat({});
 
+    const messageJson = (jsonString: string) => {
+        try {
+            const res = JSON.parse(jsonString);
+
+            const response: responseInterface = {
+                text: res.text,
+                html: res.html,
+                css: res.css,
+                js: res.js,
+            };
+
+            setHtml(response.html || "");
+            setCss(response.css || "");
+            setJs(response.js || "");
+
+            return response;
+        } catch (err) {
+            console.error("Error parsing JSON:", err);
+            return null;
+        }
+    };
+
     return (
         <main className="bg-primary p-4 rounded-md text-center text-xl m-6 font-medium flex flex-row h-[90vh]">
-            <Canvas />
+            <Canvas html={html} css={css} js={js} />
 
             <div className="flex flex-col items-start justify-start border-2 border-secondary w-1/4 m-2 rounded-xl text-white">
                 <div className="flex flex-row justify-between w-full">
                     <h1 className="m-3">Chat</h1>
                 </div>
-                <div className="flex flex-col justify-start w-full h-screen overflow-auto">
-                    {messages.map((m) => (
-                        <div
-                            key={m.id}
-                            className="text-sm my-3 mx-3 p-2 flex w-[90%] h-fit bg-secondary rounded-xl text-black"
-                        >
-                            <p>
-                                {m.role === "user" ? "User" : "AI"}: {m.content}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="m-2 flex flex-col w-full justify-end">
-                    <form onSubmit={handleSubmit}>
-                        <div className="flex">
-                            <input
-                                className="text-sm m-2 p-2 w-5/6 rounded-xl text-black border-2 border-secondary focus:outline-none"
-                                type="text"
-                                placeholder='Create a heading as "Hello World!"...'
-                                id="promptBox"
-                                value={input}
-                                onChange={handleInputChange}
-                            />
-                            <button className="w-1/6 rounded-xl" type="submit">
-                                <AiOutlineSend className="text-3xl text-secondary transition hover:scale-110" />
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                <ChatInterface
+                    messages={messages}
+                    input={input}
+                    handleInputChange={handleInputChange}
+                    handleSubmit={handleSubmit}
+                    messageJson={messageJson}
+                />
             </div>
         </main>
     );
