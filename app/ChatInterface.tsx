@@ -17,7 +17,7 @@ const ChatInterface = ({
     messageJson,
 }: ChatInterfaceProps) => {
     return (
-        <div className="flex flex-col justify-start w-full h-screen overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-col justify-start w-full h-full overflow-y-auto overflow-x-hidden">
             <div className="flex-grow overflow-auto">
                 {messages.map((m) => (
                     <div

@@ -1,20 +1,40 @@
 import React from "react";
 
 interface CanvasProps {
-    html?: string;
-    css?: string;
-    js?: string;
-} 
+    html: string;
+    css: string;
+    js: string;
+}
 
 const Canvas = ({ html, css, js }: CanvasProps) => {
+    const isHtmlValid = (html: string) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        return doc.body.innerHTML !== "";
+    };
+
+    const htmlWithCSSAndJS = `
+		<html>
+			<head>
+				<style>${css}</style>
+			</head>
+			<body>
+				${isHtmlValid(html) ? html : "<h2>(Ask AI to build something for you and preview it live here on this canvas!)</h2>"}
+				<script>${js}</script>
+			</body>
+		</html>
+	`;
+
     return (
-        <div className="flex flex-col items-center justify-start w-3/4 m-2 p-3 rounded-xl bg-white">
-            <div dangerouslySetInnerHTML={{ __html: html || "(Ask the AI to build something for you. Preview the changes on this canvas, LIVE!)" }} />
-
-            <style>{css}</style>
-
-            <script>{js}</script>
-        </div>
+        <iframe
+            srcDoc={htmlWithCSSAndJS}
+            title="Canvas"
+            sandbox="allow-scripts"
+            width="100%"
+            height="100%"
+            className="w-3/4 rounded-xl bg-white"
+        />
     );
 };
 
