@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useChat } from "ai/react";
 import Canvas from "./Canvas";
 import ChatInterface from "./ChatInterface";
@@ -18,6 +18,15 @@ export default function Home() {
     const [css, setCss] = useState("");
     const [js, setJs] = useState("");
     const [overlay, setOverlay] = useState(true);
+    const [checkApi, setCheckApi] = useState(false);
+
+    useEffect(() => {
+        if (localStorage.getItem("openai_api_key")) {
+            setOverlay(false);            
+        } else {
+            setOverlay(true);
+        }
+    }, []);
 
     const { messages, input, handleInputChange, handleSubmit } = useChat({});
 

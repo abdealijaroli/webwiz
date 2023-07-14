@@ -1,8 +1,14 @@
 const Overlay = ({
-    setOverlay
+    setOverlay,
 }: {
     setOverlay: (overlay: boolean) => void;
 }) => {
+
+    const handleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
+        localStorage.setItem("openai_api_key", e.target.value);
+        setOverlay(false);
+    };
+    
     return (
         <div className="fixed inset-0 z-10 overflow-y-auto">
             <div className="fixed inset-0 w-full h-full bg-black opacity-40"></div>
@@ -45,13 +51,11 @@ const Overlay = ({
                             className="w-full px-3 py-2 text-sm text-gray-700 placeholder-gray-500 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                             type="text"
                             placeholder="Enter your API key here..."
+                            onChange={handleClick}
                         />
                     </div>
                     <div className="flex gap-3 p-4 float-right">
-                        <button
-                            className="px-6 py-2 text-white bg-primary rounded-md outline-none ring-offset-2 ring-primary focus:ring-2"
-                            onClick={() => setOverlay(false)}
-                        >
+                        <button className="px-6 py-2 text-white bg-primary rounded-md outline-none ring-offset-2 ring-primary focus:ring-2">
                             Confirm
                         </button>
                     </div>
